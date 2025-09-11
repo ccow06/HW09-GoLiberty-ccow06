@@ -1,5 +1,16 @@
 # Calculating Liberty in Go
 
+## Why Go?
+
+Go is one of the oldest board games in the world. Unlike chess, Go resisted artificial intelligence for much longer because of its vast number of possible board states and the difficulty of evaluating positions. 
+
+The breakthrough came with AlphaGo, an AI developed by DeepMind, which combined deep learning and reinforcement learning to defeat some of the strongest professional players in the world. This was a landmark achievement because it showed that AI could move beyond brute-force search. Now, we live in a world of more creative solutions.
+
+AlphaGo’s victory demonstrated the potential of machine learning to tackle complex, uncertain problems, influencing research far beyond games.
+
+If you are interested in learning more about the story of AlphaGo, linked below is an amazing documentary:
+
+[![Watch the video](https://resizing.flixster.com/5SegS0ix_WFF1tZ2TjMFy8J9s0Q=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p14087603_v_h10_aa.jpg)](https://www.youtube.com/watch?v=WXuK6gekU1Y&ab_channel=GoogleDeepMind)
 
 ## Learning Objectives
 
