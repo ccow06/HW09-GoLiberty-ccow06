@@ -8,24 +8,28 @@ GoGame * readBoard(const char * filename){
     //both the GoGame struct and its internal array should be created on the heap
     FILE * readFile;
     GoGame * goBoard;
-    int size;
 
     readFile = fopen(filename, "r");
     if (readFile == NULL)
     {
         return NULL;
     }
-    fscanf(readFile, "%d", &size);
-    goBoard = malloc(sizeof(int) + sizeof(char**));
-    for (int i = 0; i < size; i++)
+
+    do
     {
-        goBoard -> board[i] = malloc(sizeof(char) * (size + 1));
+        goBoard = malloc(sizeof(int) + sizeof(char**));
+    } while (goBoard == NULL);
+    fscanf(readFile, "%d", &goBoard -> size);
+    
+    for (int i = 0; i < goBoard -> size; i++)
+    {
+        goBoard -> board[i] = malloc(sizeof(char) * (goBoard -> size + 1));
         if (goBoard -> board[i] == NULL)
         {
             i--;
             continue;
         }
-        fgets(goBoard -> board[i], size, readFile);
+        fgets(goBoard -> board[i], goBoard -> size, readFile);
     }
 
     fclose(readFile);
