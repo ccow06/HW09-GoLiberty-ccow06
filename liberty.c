@@ -5,17 +5,81 @@
 
 GoGame * readBoard(const char * filename){
     //fill this function to read from the given file and create a GoGame structure
-    //both the GoGame struct and it's internal array should be created on the heap
-    return NULL;
-}
+    //both the GoGame struct and its internal array should be created on the heap
+    FILE * readFile;
+    GoGame * goBoard;
+    int size;
 
+    readFile = fopen(filename, "r");
+    if (readFile == NULL)
+    {
+        return NULL;
+    }
+    fscanf(readFile, "%d", &size);
+    goBoard = malloc(sizeof(int) + sizeof(char**));
+    for (int i = 0; i < size; i++)
+    {
+        goBoard -> board[i] = malloc(sizeof(char) * (size + 1));
+        if (goBoard -> board[i] == NULL)
+        {
+            i--;
+            continue;
+        }
+        fgets(goBoard -> board[i], size, readFile);
+    }
+
+    fclose(readFile);
+    return goBoard;
+}
 
 int getLiberty(GoGame * game, int x, int y){
     //Fill in this function to take in a GoGame and find the liberty of the piece at intersection (x,y)
-    //Assume (x,y) is always a valid intersection with a piece 
-    return 0;
+    //Assume (x,y) is always a valid intersection with a piece
+    int liberty = 0;
+    char color;
+    char nextTile;
+    int nextX;
+    int nextY;
+    
+    color = game -> board[x][y];
+    game -> board[x][y] += 32; // converts the character to lowercase so it isn't counted twice
+
+    for (int i = -1; i < 2; i += 2)
+    {
+        nextX = x + i;
+        if (nextX < 0 || nextX >= game -> size)
+        {
+            continue;
+        }
+        for (int j = -1; j < 2; j += 2)
+        {
+            nextY = y + j;
+            if (nextY < 0 || nextY >= game -> size)
+            {
+                continue;
+            }
+            nextTile = game -> board[nextX][nextY];
+            if (nextTile == color)
+            {
+                liberty += getLiberty(game, nextX, nextY);
+            }
+            if (nextTile == '*')
+            {
+                liberty++;
+                game -> board[nextX][nextY] = 'x';
+            }
+        }
+    }
+
+    game -> board[x][y] = color; // automatically converted back to normal
+    return liberty;
 }
 
 void freeBoard(GoGame * game){
     //Fill this function to free your GoGame structure from the heap
+    for (int i = 0; i < game -> size; i++)
+    {
+        free(game -> board[i]);
+    }
+    free(game);
 }
