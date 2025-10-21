@@ -17,7 +17,7 @@ GoGame * readBoard(const char * filename){
 
     do
     {
-        goBoard = malloc(sizeof(int) + sizeof(char**));
+        goBoard = malloc(sizeof(GoGame));
     } while (goBoard == NULL);
     fscanf(readFile, "%d", &goBoard -> size);
     
@@ -31,6 +31,7 @@ GoGame * readBoard(const char * filename){
             continue;
         }
         fgets(goBoard -> board[i], goBoard -> size, readFile);
+        goBoard -> board[i][goBoard -> size] = '\0';
     }
 
     fclose(readFile);
