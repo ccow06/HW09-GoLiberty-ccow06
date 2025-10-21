@@ -46,8 +46,12 @@ int getLiberty(GoGame * game, int x, int y){
     int nextX;
     int nextY;
     
-    color = game -> board[x][y];
-    game -> board[x][y] += 32; // converts the character to lowercase so it isn't counted twice
+    color = game -> board[y][x];
+    if (color == '*')
+    {
+        return liberty;
+    }
+    game -> board[y][x] += 32; // converts the character to lowercase so it isn't counted twice
 
     for (int i = -1; i < 2; i += 2)
     {
@@ -56,27 +60,38 @@ int getLiberty(GoGame * game, int x, int y){
         {
             continue;
         }
-        for (int j = -1; j < 2; j += 2)
+        nextTile = game -> board[y][nextX];
+        if (nextTile == color)
         {
-            nextY = y + j;
-            if (nextY < 0 || nextY >= game -> size)
-            {
-                continue;
-            }
-            nextTile = game -> board[nextX][nextY];
-            if (nextTile == color)
-            {
-                liberty += getLiberty(game, nextX, nextY);
-            }
-            if (nextTile == '*')
-            {
-                liberty++;
-                game -> board[nextX][nextY] = 'x';
-            }
+            liberty += getLiberty(game, nextX, y);
+        }
+        if (nextTile == '*')
+        {
+            liberty++;
+            game -> board[y][nextX] = 'x';
         }
     }
+    for (int j = -1; j < 2; j += 2)
+    {
+        nextY = y + j;
+        if (nextY < 0 || nextY >= game -> size)
+        {
+            continue;
+        }
+        nextTile = game -> board[nextY][x];
+        if (nextTile == color)
+        {
+            liberty += getLiberty(game, x, nextY);
+        }
+        if (nextTile == '*')
+        {
+            liberty++;
+            game -> board[nextY][x] = 'x';
+        }
+    }
+    
 
-    game -> board[x][y] = color; // automatically converted back to normal
+    // game -> board[x][y] = color; // automatically converted back to normal
     return liberty;
 }
 
