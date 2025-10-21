@@ -19,9 +19,10 @@ GoGame * readBoard(const char * filename){
     {
         goBoard = malloc(sizeof(GoGame));
     } while (goBoard == NULL);
-    fscanf(readFile, "%d", &goBoard -> size);
+    fscanf(readFile, "%d\n", &goBoard -> size);
     
     goBoard -> board = malloc(sizeof(char *) * goBoard -> size);
+    // while (linesRead < goBoard -> size)
     for (int i = 0; i < goBoard -> size; i++)
     {
         goBoard -> board[i] = malloc(sizeof(char) * (goBoard -> size + 1));
@@ -30,8 +31,9 @@ GoGame * readBoard(const char * filename){
             i--;
             continue;
         }
-        fgets(goBoard -> board[i], goBoard -> size, readFile);
+        fgets(goBoard -> board[i], goBoard -> size + 2, readFile);
         goBoard -> board[i][goBoard -> size] = '\0';
+        // printf("%s\n", goBoard -> board[i]);
     }
 
     fclose(readFile);
@@ -52,7 +54,7 @@ int getLiberty(GoGame * game, int x, int y){
     {
         return liberty;
     }
-    game -> board[y][x] += 32; // converts the character to lowercase so it isn't counted twice
+    game -> board[y][x] = 'L'; // converts the character to lowercase so it isn't counted twice
 
     for (int i = -1; i < 2; i += 2)
     {
