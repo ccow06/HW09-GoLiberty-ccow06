@@ -25,14 +25,13 @@ GoGame * readBoard(const char * filename){
     // while (linesRead < goBoard -> size)
     for (int i = 0; i < goBoard -> size; i++)
     {
-        goBoard -> board[i] = malloc(sizeof(char) * (goBoard -> size + 1));
+        goBoard -> board[i] = malloc(sizeof(char) * (goBoard -> size + 2));
         if (goBoard -> board[i] == NULL)
         {
             i--;
             continue;
         }
-        fgets(goBoard -> board[i], goBoard -> size + 2, readFile);
-        goBoard -> board[i][goBoard -> size] = '\0';
+        fgets(goBoard -> board[i], goBoard -> size + 3, readFile);
         // printf("%s\n", goBoard -> board[i]);
     }
 

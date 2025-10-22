@@ -30,6 +30,9 @@ clean:
 	rm -f output?
 	rm -f hw09 *.o
 
+memory: hw09
+	valgrind -s --errors-for-leak-kinds=all --leak-check=full --show-leak-kinds=all --error-exitcode=2 ./hw09 inputs/test3 2 6
+
 .c.o: 
 	$(GCC) -c $*.c 
 
